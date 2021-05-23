@@ -24,3 +24,8 @@ nav{
 #btn{
     background-color: rgb(133, 23, 235);
 }
+
+.scroll{
+    height:150px;
+    overflow-y: scroll;
+}
