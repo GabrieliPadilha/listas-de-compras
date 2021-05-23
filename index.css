@@ -50,3 +50,8 @@
     input{
         width: 350px;
     }
+
+    .scroll{
+        height:150px;
+        overflow-y: scroll;
+    }
