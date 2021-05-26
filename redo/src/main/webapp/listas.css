@@ -1,0 +1,31 @@
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, rgba(169,136,191,1) 0%, rgba(134,162,233,1) 100%);
+}
+
+.card{
+    background-color: rgb(230, 221, 238);
+    width: 500px;
+    height: 300px;
+}
+
+nav{
+    height: 45px;
+}
+
+.conteudo{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#btn{
+    background-color: rgb(133, 23, 235);
+}
+
+.scroll{
+    height:150px;
+    overflow-y: scroll;
+}
