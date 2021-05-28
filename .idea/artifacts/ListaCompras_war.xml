@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ListaCompras:war">
+    <output-path>$PROJECT_DIR$/redo/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>ListaCompras</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ListaCompras-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ListaCompras:war exploded" />
+    </root>
+  </artifact>
+</component>

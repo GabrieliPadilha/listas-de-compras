@@ -13,7 +13,8 @@
 }*/
 
 function pesquisar() {
-       const produto = document.querySelector("#produto");
+    Event.preventDefault()
+    const produto = document.querySelector("#produto");
     fetch(`api/search?query=${produto.value}`).then( r => r.json() ).then( resultList => resultList.forEach(item => alert(''+item)).catch( e => alert(''+e)));
 
 }
