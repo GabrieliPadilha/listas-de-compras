@@ -37,7 +37,8 @@ public class ListResource {
     public List<String> updateList(List<String> items) throws SQLException, NamingException {
         Connection connection = ListDatabaseBuilder.getDatasource();
 
-        PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO lista (Nome_Item) VALUES (?)");
+        PreparedStatement insertStatement = connection
+                .prepareStatement("INSERT INTO lista (Nome_Item) VALUES (?)");
 
         for (String item : items) {
             insertStatement.setString(1, item);
