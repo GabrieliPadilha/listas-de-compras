@@ -12,11 +12,19 @@
         })
 }*/
 
-function pesquisar() {
-    Event.preventDefault()
-    const produto = document.querySelector("#produto");
-    fetch(`api/search?query=${produto.value}`).then( r => r.json() ).then( resultList => resultList.forEach(item => alert(''+item)).catch( e => alert(''+e)));
-
+function pesquisar(event) {
+    event.preventDefault()
+    const produto = document.querySelector("#produto")
+    fetch(`api/list/search?query=${produto.value}`)
+        .then( r => r.json() )
+        .then(compras => {
+            const lista = document.querySelector('#listaEncontrada')
+            compras.forEach(compra => {
+                const div = document.createElement('div')
+                div.textContent = compra
+                lista.appendChild(div)
+            })
+        })
 }
 
 window.addEventListener('load',Event => document.querySelector("#btn").addEventListener("click",pesquisar));

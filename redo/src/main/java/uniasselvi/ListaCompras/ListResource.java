@@ -19,15 +19,20 @@ public class ListResource {
     public List<String> getList() throws SQLException, NamingException {
         Connection connection = ListDatabaseBuilder.getDatasource();
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT Nome_Item FROM lista");
-        ResultSet results = stmt.executeQuery();
+        try {
 
-        ArrayList<String> returnValue = new ArrayList<>();
-        while (results.next()) {
-            returnValue.add(results.getString("Nome_Item"));
+            PreparedStatement stmt = connection.prepareStatement("SELECT Nome_Item FROM lista");
+            ResultSet results = stmt.executeQuery();
+
+            ArrayList<String> returnValue = new ArrayList<>();
+            while (results.next()) {
+                returnValue.add(results.getString("Nome_Item"));
+            }
+
+            return returnValue;
+        } finally {
+            connection.close();
         }
-
-        return returnValue;
     }
 
     @POST
@@ -37,29 +42,45 @@ public class ListResource {
     public List<String> updateList(List<String> items) throws SQLException, NamingException {
         Connection connection = ListDatabaseBuilder.getDatasource();
 
-        PreparedStatement insertStatement = connection
-                .prepareStatement("INSERT INTO lista (Nome_Item) VALUES (?)");
+        try {
+            PreparedStatement insertStatement = connection
+                    .prepareStatement("INSERT INTO lista (Nome_Item) VALUES (?)");
 
-        for (String item : items) {
-            insertStatement.setString(1, item);
-            insertStatement.execute();
+            for (String item : items) {
+                insertStatement.setString(1, item);
+                insertStatement.execute();
+            }
+
+            return getList();
+        } finally {
+            connection.close();
         }
-
-        return getList();
     }
 
-  @Path("/search")
-    public List<String> search(@QueryParam("produto") String query) throws SQLException, NamingException {
+    @GET
+    @Path("/search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> search(@QueryParam("query") String query) throws SQLException, NamingException {
 
-      Connection connection = ListDatabaseBuilder.getDatasource();
-      PreparedStatement search = connection.prepareStatement("select Nome_Item from lista where Nome_Item LIKE (?)");
-      search.setString(1,query);
-      search.execute();
+        Connection connection = ListDatabaseBuilder.getDatasource();
 
         try {
-            return search(query);
+            PreparedStatement search = connection
+                    .prepareStatement("select Nome_Item from lista where Nome_Item LIKE ?");
+            search.setString(1, String.format("%%%s%%", query));
+            ResultSet results = search.executeQuery();
+
+            ArrayList<String> returnValue = new ArrayList<>();
+            while (results.next()) {
+                returnValue.add(results.getString("Nome_Item"));
+            }
+
+            return returnValue;
         } catch (SQLException e) {
+            e.printStackTrace();
             return Collections.emptyList();
+        } finally {
+            connection.close();
         }
     }
 }
