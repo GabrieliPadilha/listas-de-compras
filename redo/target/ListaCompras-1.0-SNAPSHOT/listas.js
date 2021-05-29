@@ -12,8 +12,8 @@
         })
 }*/
 
-function pesquisar() {
-    Event.preventDefault()
+function pesquisar(event) {
+    event.preventDefault()
     const produto = document.querySelector("#produto");
     fetch(`api/search?query=${produto.value}`).then( r => r.json() ).then( resultList => resultList.forEach(item => alert(''+item)).catch( e => alert(''+e)));
 
